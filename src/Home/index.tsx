@@ -1,12 +1,25 @@
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, FlatList, Alert } from "react-native";
 import { styles } from "./styles";
 import { Participant } from "../components/Participant";
 
 export function Home() {
 
-  function handleParticipantAdd() {
+  function handleParticipantAdd() { }
 
+  function handleParticipantRemove(name: string) {
+    Alert.alert("Remover", `Remover participante ${name}?`, [
+      {
+        text: "Sim",
+        onPress: () => Alert.alert(`Deletado ${name}`)
+      },
+      {
+        text: "Não",
+        style: "cancel"
+      }
+    ])
   }
+
+  const participants = ['Joao', 'Paula', 'Felipe', 'Bia', 'Carol', 'Gabriel', 'Rodrigo', 'Gi', 'Fabricio', 'Ana']
 
   return (
     <View style={styles.container}>
@@ -28,9 +41,23 @@ export function Home() {
         </TouchableOpacity>
       </View>
 
-      <Participant />
-      <Participant />
-
+      <FlatList
+        data={participants}
+        keyExtractor={participant => participant}
+        renderItem={({ item }) => (
+          <Participant
+            key={item}
+            name={item}
+            handleParticipantRemove={() => handleParticipantRemove(item)}
+          />
+        )}
+        showsVerticalScrollIndicator={false}
+        ListEmptyComponent={() => (
+          <Text style={styles.listEmptyText}>
+            Ninguem registrado para o evento ainda.
+          </Text>
+        )}
+      />
     </View>
   );
 }

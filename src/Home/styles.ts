@@ -43,5 +43,10 @@ export const styles = StyleSheet.create({
   buttonText: {
     color: "#fff",
     fontSize: 32,
+  },
+  listEmptyText: {
+    color: "#fff",
+    textAlign: "center",
+    fontSize: 14
   }
 });
